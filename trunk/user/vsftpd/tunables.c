@@ -17,7 +17,6 @@ int tunable_write_enable;
 int tunable_anon_upload_enable;
 int tunable_anon_mkdir_write_enable;
 int tunable_anon_other_write_enable;
-int tunable_allow_writable_root;
 int tunable_chown_uploads;
 int tunable_connect_from_port_20;
 int tunable_xferlog_enable;
@@ -67,13 +66,15 @@ int tunable_force_local_data_ssl;
 int tunable_sslv2;
 int tunable_sslv3;
 int tunable_tlsv1;
+int tunable_tlsv1_1;
+int tunable_tlsv1_2;
+int tunable_tlsv1_3;
 int tunable_tilde_user_enable;
 int tunable_force_anon_logins_ssl;
 int tunable_force_anon_data_ssl;
 int tunable_mdtm_write;
 int tunable_lock_upload_files;
 int tunable_pasv_addr_resolve;
-int tunable_utf8;
 int tunable_debug_ssl;
 int tunable_require_cert;
 int tunable_validate_cert;
@@ -144,6 +145,7 @@ const char* tunable_ssl_ciphers;
 const char* tunable_rsa_private_key_file;
 const char* tunable_dsa_private_key_file;
 const char* tunable_ca_certs_file;
+const char* tunable_ssl_sni_hostname;
 
 static void install_str_setting(const char* p_value, const char** p_storage);
 
@@ -159,7 +161,6 @@ tunables_load_defaults()
   tunable_anon_upload_enable = 0;
   tunable_anon_mkdir_write_enable = 0;
   tunable_anon_other_write_enable = 0;
-  tunable_allow_writable_root = 1;
   tunable_chown_uploads = 0;
   tunable_connect_from_port_20 = 0;
   tunable_xferlog_enable = 0;
@@ -181,7 +182,7 @@ tunables_load_defaults()
   tunable_userlist_enable = 0;
   tunable_userlist_deny = 1;
   tunable_use_localtime = 0;
-  tunable_check_shell = 0;
+  tunable_check_shell = 1;
   tunable_hide_ids = 0;
   tunable_listen = 1;
   tunable_port_promiscuous = 0;
@@ -208,14 +209,16 @@ tunables_load_defaults()
   tunable_force_local_data_ssl = 1;
   tunable_sslv2 = 0;
   tunable_sslv3 = 0;
-  tunable_tlsv1 = 1;
+  tunable_tlsv1 = 0;
+  tunable_tlsv1_1 = 0;
+  tunable_tlsv1_2 = 1;
+  tunable_tlsv1_3 = 1;
   tunable_tilde_user_enable = 0;
   tunable_force_anon_logins_ssl = 0;
   tunable_force_anon_data_ssl = 0;
   tunable_mdtm_write = 1;
   tunable_lock_upload_files = 1;
   tunable_pasv_addr_resolve = 0;
-  tunable_utf8 = 1;
   tunable_debug_ssl = 0;
   tunable_require_cert = 0;
   tunable_validate_cert = 0;
@@ -230,7 +233,7 @@ tunables_load_defaults()
   tunable_isolate_network = 1;
   tunable_ftp_enable = 1;
   tunable_http_enable = 0;
-  tunable_seccomp_sandbox = 0;
+  tunable_seccomp_sandbox = 1;
   tunable_allow_writeable_chroot = 0;
 
   tunable_accept_timeout = 60;
@@ -247,10 +250,10 @@ tunables_load_defaults()
   tunable_local_max_rate = 0;
   /* IPPORT_FTP */
   tunable_listen_port = 21;
-  tunable_max_clients = 100;
+  tunable_max_clients = 2000;
   /* -rw-rw-rw- */
   tunable_file_open_mode = 0666;
-  tunable_max_per_ip = 10;
+  tunable_max_per_ip = 50;
   tunable_trans_chunk_size = 0;
   tunable_delay_failed_login = 1;
   tunable_delay_successful_login = 0;
@@ -285,13 +288,14 @@ tunables_load_defaults()
   install_str_setting(0, &tunable_user_sub_token);
   install_str_setting("/etc/vsftpd.email_passwords",
                       &tunable_email_password_file);
-  install_str_setting("/etc/storage/ftpd/vsftpd.pem",
+  install_str_setting("/usr/share/ssl/certs/vsftpd.pem",
                       &tunable_rsa_cert_file);
   install_str_setting(0, &tunable_dsa_cert_file);
   install_str_setting("ECDHE-RSA-AES256-GCM-SHA384", &tunable_ssl_ciphers);
   install_str_setting(0, &tunable_rsa_private_key_file);
   install_str_setting(0, &tunable_dsa_private_key_file);
   install_str_setting(0, &tunable_ca_certs_file);
+  install_str_setting(0, &tunable_ssl_sni_hostname);
 }
 
 void

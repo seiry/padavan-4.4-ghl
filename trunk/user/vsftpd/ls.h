@@ -3,7 +3,6 @@
 
 struct mystr;
 struct mystr_list;
-struct vsf_session;
 struct vsf_sysutil_dir;
 
 /* vsf_ls_populate_dir_list()
@@ -20,8 +19,7 @@ struct vsf_sysutil_dir;
  * p_filter_str   - the filter string given to LIST/NLST - e.g. "*.mp3"
  * is_verbose     - set to 1 for LIST, 0 for NLST
  */
-void vsf_ls_populate_dir_list(struct vsf_session* p_sess,
-                              struct mystr_list* p_list,
+void vsf_ls_populate_dir_list(struct mystr_list* p_list,
                               struct mystr_list* p_subdir_list,
                               struct vsf_sysutil_dir* p_dir,
                               const struct mystr* p_base_dir_str,

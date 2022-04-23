@@ -23,6 +23,7 @@ struct vsf_session
   char* p_control_line_buf;
   int idle_timeout;
   int data_timeout;
+  int prelogin_errors;
 
   /* Details of the data connection */
   int pasv_listen_fd;
@@ -34,7 +35,6 @@ struct vsf_session
   long bw_send_start_usec;
 
   /* Details of the login */
-  int st_ftp_mode;
   int is_anonymous;
   int is_guest;
   struct mystr user_str;
@@ -79,7 +79,6 @@ struct vsf_session
   /* Buffers */
   struct mystr ftp_cmd_str;
   struct mystr ftp_arg_str;
-  struct mystr cwd_str;
 
   /* Parent<->child comms channel */
   int parent_fd;

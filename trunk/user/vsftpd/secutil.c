@@ -11,7 +11,6 @@
 #include "sysstr.h"
 #include "utility.h"
 #include "sysdeputil.h"
-#include "tunables.h"
 
 void
 vsf_secutil_change_credentials(const struct mystr* p_user_str,
@@ -136,7 +135,7 @@ vsf_secutil_change_credentials(const struct mystr* p_user_str,
   if ((options & VSF_SECUTIL_OPTION_CHROOT) &&
       !(options & VSF_SECUTIL_OPTION_ALLOW_WRITEABLE_ROOT))
   {
-    if (!tunable_allow_writable_root && vsf_sysutil_write_access("/"))
+    if (vsf_sysutil_write_access("/"))
     {
       die("vsftpd: refusing to run with writable root inside chroot()");
     }

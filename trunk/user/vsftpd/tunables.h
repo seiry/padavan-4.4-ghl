@@ -18,7 +18,6 @@ extern int tunable_write_enable;              /* Global enable writes */
 extern int tunable_anon_upload_enable;        /* Enable STOR for anon users */
 extern int tunable_anon_mkdir_write_enable;   /* MKD for anon */
 extern int tunable_anon_other_write_enable;   /* APPE DELE RMD RNFR for anon */
-extern int tunable_allow_writable_root;       /* allow writable / */
 extern int tunable_chown_uploads;             /* chown() anon uploaded files */
 extern int tunable_connect_from_port_20;      /* PORT connects from port 20 */
 extern int tunable_xferlog_enable;            /* Log transfers to a file */
@@ -67,14 +66,16 @@ extern int tunable_force_local_logins_ssl;    /* Require local logins use SSL */
 extern int tunable_force_local_data_ssl;      /* Require local data uses SSL */
 extern int tunable_sslv2;                     /* Allow SSLv2 */
 extern int tunable_sslv3;                     /* Allow SSLv3 */
-extern int tunable_tlsv1;                     /* Allow TLSv1 */
+extern int tunable_tlsv1;                     /* Allow TLSv1.0 */
+extern int tunable_tlsv1_1;                   /* Allow TLSv1.1 */
+extern int tunable_tlsv1_2;                   /* Allow TLSv1.2 */
+extern int tunable_tlsv1_3;                   /* Allow TLSv1.3 */
 extern int tunable_tilde_user_enable;         /* Support e.g. ~chris */
 extern int tunable_force_anon_logins_ssl;     /* Require anon logins use SSL */
 extern int tunable_force_anon_data_ssl;       /* Require anon data uses SSL */
 extern int tunable_mdtm_write;                /* Allow MDTM to set timestamps */
 extern int tunable_lock_upload_files;         /* Lock uploading files */
 extern int tunable_pasv_addr_resolve;         /* DNS resolve pasv_addr */
-extern int tunable_utf8;                      /* Report UTF8 support */
 extern int tunable_debug_ssl;                 /* Verbose SSL logging */
 extern int tunable_require_cert;              /* SSL client cert required */
 extern int tunable_validate_cert;             /* SSL certs must be valid */
@@ -146,6 +147,7 @@ extern const char* tunable_ssl_ciphers;
 extern const char* tunable_rsa_private_key_file;
 extern const char* tunable_dsa_private_key_file;
 extern const char* tunable_ca_certs_file;
+extern const char* tunable_ssl_sni_hostname;
 extern const char* tunable_cmds_denied;
 
 #endif /* VSF_TUNABLES_H */
