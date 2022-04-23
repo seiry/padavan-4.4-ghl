@@ -23,6 +23,8 @@
 #include "vsftpver.h"
 #include "ssl.h"
 
+#include "asus_ext.h"
+
 /*
  * Forward decls of helper functions
  */
@@ -38,11 +40,11 @@ main(int argc, const char* argv[])
   struct vsf_session the_session =
   {
     /* Control connection */
-    0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0,
     /* Data connection */
     -1, 0, -1, 0, 0, 0, 0,
     /* Login */
-    1, 0, INIT_MYSTR, INIT_MYSTR,
+    1, 1, 0, INIT_MYSTR, INIT_MYSTR,
     /* Protocol state */
     0, 1, INIT_MYSTR, 0, 0,
     /* HTTP hacks */
@@ -56,7 +58,7 @@ main(int argc, const char* argv[])
     /* Logging */
     -1, -1, INIT_MYSTR, 0, 0, 0, INIT_MYSTR, 0,
     /* Buffers */
-    INIT_MYSTR, INIT_MYSTR,
+    INIT_MYSTR, INIT_MYSTR, INIT_MYSTR,
     /* Parent <-> child comms */
     -1, -1,
     /* Number of clients */
@@ -243,6 +245,7 @@ main(int argc, const char* argv[])
       tunable_chown_uploads = 0;
     }
   }
+  the_session.st_ftp_mode = asus_share_mode_read();
   if (tunable_one_process_model)
   {
     vsf_one_process_start(&the_session);

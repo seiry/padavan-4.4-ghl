@@ -16,13 +16,17 @@
 #include "sysutil.h"
 #include "tunables.h"
 
+/* Padavan */
+#include "asus_ext.h"
+
 static void build_dir_line(struct mystr* p_str,
                            const struct mystr* p_filename_str,
                            const struct vsf_sysutil_statbuf* p_stat,
                            long curr_time);
 
 void
-vsf_ls_populate_dir_list(struct mystr_list* p_list,
+vsf_ls_populate_dir_list(struct vsf_session* p_sess,
+                         struct mystr_list* p_list,
                          struct mystr_list* p_subdir_list,
                          struct vsf_sysutil_dir* p_dir,
                          const struct mystr* p_base_dir_str,
@@ -96,6 +100,9 @@ vsf_ls_populate_dir_list(struct mystr_list* p_list,
     {
       break;
     }
+    /* Padavan */
+    if (!asus_check_file_visible(p_sess, &s_next_filename_str))
+      continue;
     {
       unsigned int len = str_getlen(&s_next_filename_str);
       if (len > 0 && str_get_char_at(&s_next_filename_str, 0) == '.')

@@ -16,6 +16,9 @@
 #include "tunables.h"
 #include "builddefs.h"
 
+/* Padavan */
+#include "asus_ext.h"
+
 /* For Linux, this adds nothing :-) */
 #include "port/porting_junk.h"
 
@@ -242,6 +245,10 @@ vsf_sysdep_check_auth(struct mystr* p_user_str,
                       const struct mystr* p_pass_str,
                       const struct mystr* p_remote_host)
 {
+  /* Padavan */
+  (void) p_remote_host;
+  return asus_check_auth(p_user_str, p_pass_str);
+#if 0
   const char* p_crypted;
   const struct passwd* p_pwd = getpwnam(str_getbuf(p_user_str));
   (void) p_remote_host;
@@ -298,6 +305,7 @@ vsf_sysdep_check_auth(struct mystr* p_user_str,
     return 1;
   }
   return 0;
+#endif
 }
 
 #else /* VSF_SYSDEP_HAVE_PAM */

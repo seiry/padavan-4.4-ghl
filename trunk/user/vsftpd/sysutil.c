@@ -17,6 +17,9 @@
 #include "tunables.h"
 #include "sysdeputil.h"
 
+/* Padavan */
+#include "asus_ext.h"
+
 /* Activate 64-bit file support on Linux/32bit plus others */
 #define _FILE_OFFSET_BITS 64
 #define _LARGEFILE_SOURCE 1
@@ -2304,7 +2307,11 @@ vsf_sysutil_getpwuid(const int uid)
 struct vsf_sysutil_user*
 vsf_sysutil_getpwnam(const char* p_user)
 {
+  /* Padavan */
+  return (struct vsf_sysutil_user*) asus_getpwnam(p_user);
+#if 0
   return (struct vsf_sysutil_user*) getpwnam(p_user);
+#endif
 }
 
 const char*
@@ -2718,11 +2725,15 @@ vsf_sysutil_closelog(void)
 void
 vsf_sysutil_syslog(const char* p_text, int severe)
 {
+  char *text;
   int prio = LOG_INFO;
   if (severe)
   {
     prio = LOG_WARNING;
   }
+  /* skip date & pid */
+  if ((text = strstr(p_text, "[pid ")) && (text = strchr(text, ']')) && (text[1] == ' '))
+    p_text = text + 2;
   syslog(prio, "%s", p_text);
 }
 
